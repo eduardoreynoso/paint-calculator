@@ -1,0 +1,21 @@
+{
+  "test_functional_calculate_feet":
+    [
+      {
+        "input": {
+            "length": 2,
+            "width": 3,
+            "height": 4
+        },
+        "output": 40
+      },
+      {
+        "input": {
+            "length": 2,
+            "width": 3,
+            "height": 5
+        },
+        "output": 50
+      }
+    ]
+}

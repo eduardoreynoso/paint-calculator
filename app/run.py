@@ -26,10 +26,23 @@ def dimensions():
 @app.route('/results', methods=['POST'])
 def results():
     """
-    Performs most of the logic for paint calculations
+    Calculates the result and renders the page
     :return: Results page
     """
     data = request.values
+
+    result = calculate_result(data)
+    calculate_result(data)
+
+    return render_template("results.html", all_data=result[0], total_gallons_required=result[1])
+
+
+def calculate_result(data):
+    """
+    Performs most of the logic for paint calculations
+    :param data:
+    :return:
+    """
     number_of_data_sets = len(data) / 3
     all_data = []
     total_gallons_required = 0
@@ -42,7 +55,7 @@ def results():
         total_gallons_required += calculate_gallons_required(formatted_data)
         all_data.append(formatted_data)
 
-    return render_template("results.html", all_data=all_data, total_gallons_required=total_gallons_required)
+    return all_data, total_gallons_required
 
 
 def calculate_feet(formatted_data):
@@ -51,7 +64,11 @@ def calculate_feet(formatted_data):
     :param formatted_data: dict of L/W/H information
     :return: integer for the number of feet required by performing `((Length * 2) + (Width * 2)) * Height`
     """
-    return int(formatted_data['length']) * int(formatted_data['width']) * int(formatted_data['height'])
+    l = int(formatted_data['length'])
+    w = int(formatted_data['width'])
+    h = int(formatted_data['height'])
+
+    return ((l*2) + (w*2)) * h
 
 
 def calculate_gallons_required(formatted_data):
@@ -60,16 +77,16 @@ def calculate_gallons_required(formatted_data):
     :param formatted_data: An integer for the number of feet required to paint
     :return: feet / paint coverage, rounded up
     """
-    return math.floor(formatted_data['ft'] / 350)
+    return math.ceil(formatted_data['ft'] / 400)
 
 
-def sanitize_input(input):
+def sanitize_input(data):
     """
     This universe doesn't allow for negative numbers of rooms or feet
-    :param input: Any number
+    :param data: Any number
     :return: The absolute, integer number
     """
-    return abs(int(input))
+    return abs(int(data))
 
 
 def extract_room_info(data, room_number):
