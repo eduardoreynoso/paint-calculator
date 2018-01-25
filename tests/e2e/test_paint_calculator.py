@@ -9,7 +9,7 @@ from tests.e2e.controllers.paint_calculator_controller import PaintCalculatorCon
 logger = setup_logger(__name__)
 
 
-class MyTest(unittest.TestCase):
+class TestPaintTestCalculatorE2E(unittest.TestCase):
 
     def setUp(self):
         """

@@ -46,4 +46,37 @@ To make it easier on everybody, it's best if we use a PR to diff what work was c
 
 ## Running Tests
 
-Write instructions for how a user executes the automated tests you created.
+Tests can be run by: `python -m unittest`
+Note that the app needs to be running in another process with the default server location `http://127.0.0.1:5000/`
+
+### Test plan:
+The application lacked tests on all levels of the stack, every layer of the stack is important to cover
+
+I decided to implement the following types of tests:
+
+#### Unit tests
+A simple set of tests that verify functionality
+
+#### Functional tests
+A data driven test suite that can verify corner scenarios and different combination of inputs for all of the main pieces of code within the app
+
+#### Integration tests
+A simple test that verifies that a given workflow that uses various functions is working properly
+
+#### E2E tests
+Black box implementation of a workflow that exercises the UI of the application
+
+I will add comments to each code change and addition below.
+
+### The proper level of execution:
+
+Unit tests should be executed after every local code change, also on PRs and Deployments
+
+Functional tests should be executed before PRs and Deployments
+
+Integration tests should be ran after Deployment into any internal environment (sandboxes, staging etc)
+
+E2E tests should be executed after every Deployment (Possibly a subset) and on a programmed set of intervals i.e. Every night at 11pm.
+
+
+
